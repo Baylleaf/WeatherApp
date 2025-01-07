@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router } from "react-router-dom"; // Import BrowserRouter
 import Weather from "./components/Weather";
 import Forecast from "./components/Forecast";
 import "./styles.css";
@@ -11,7 +12,6 @@ function App() {
   const [loading, setLoading] = useState(false);
 
   const API_KEY = "1592563cdbda53777bb49695f20f06ed"; 
-  
 
   const fetchWeather = async (location) => {
     const { lat, lon } = location || {};
@@ -74,27 +74,29 @@ function App() {
   }, []);
 
   return (
-    <div className="app">
-      <h1>Weather App</h1>
-      <div className="input-container">
-  <div className="input-row">
-    <input
-      type="text"
-      placeholder="Enter city"
-      value={city}
-      onChange={(e) => setCity(e.target.value)}
-    />
-    <button onClick={() => fetchWeather()}>Get Weather</button>
-  </div>
-  <button className="location-button" onClick={fetchGeolocationWeather}>
-    Use My Location
-  </button>
-</div>
-      {error && <p className="error">{error}</p>}
-      {loading && <div className="spinner"></div>}
-      {weatherData && <Weather data={weatherData} />}
-      {forecastData && <Forecast data={forecastData} />}
-    </div>
+    <Router basename="/WeatherApp"> {/* Add basename */}
+      <div className="app">
+        <h1>Weather App</h1>
+        <div className="input-container">
+          <div className="input-row">
+            <input
+              type="text"
+              placeholder="Enter city"
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+            />
+            <button onClick={() => fetchWeather()}>Get Weather</button>
+          </div>
+          <button className="location-button" onClick={fetchGeolocationWeather}>
+            Use My Location
+          </button>
+        </div>
+        {error && <p className="error">{error}</p>}
+        {loading && <div className="spinner"></div>}
+        {weatherData && <Weather data={weatherData} />}
+        {forecastData && <Forecast data={forecastData} />}
+      </div>
+    </Router>
   );
 }
 
