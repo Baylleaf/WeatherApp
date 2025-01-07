@@ -74,7 +74,7 @@ function App() {
   }, []);
 
   return (
-    <Router basename="/WeatherApp"> {/* Add basename */}
+    <Router basename="/WeatherApp"> {}
       <div className="app">
         <h1>Weather App</h1>
         <div className="input-container">
